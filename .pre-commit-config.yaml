@@ -1,0 +1,48 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+    - id: trailing-whitespace # Убирает лишние пробелы
+    - id: end-of-file-fixer # Добавляет пустую строку в конце файла
+    - id: check-yaml # Проверяет синтаксис .yaml файлов
+    - id: requirements-txt-fixer # Сортирует по алфавиту
+    - id: check-added-large-files # Проверяет, не добавляются ли большие файлы.
+      args: ['--maxkb=300']  # максимальный размер добавляемого файла 300 кБ
+    - id: check-merge-conflict # Проверяет, нет ли файлов, содержащих конфликтующие строки слияния.
+
+-   repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        args: [ '--skip-string-normalization', '--line-length', '79' ]
+
+-   repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        name: isort (python)
+        args: [ '--profile', 'black', '--filter-files', '--line-length', '79' ]
+
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.8
+    hooks:
+      - id: ruff
+        args: [ --fix ]
+
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        exclude: migrations/
+        language: python
+        types: [ python ]
+
+# Проверяет есть ли изменения в моделях не зафиксированные в миграциях
+-   repo: local
+    hooks:
+    - id: pre-commit-check-makemigrations
+      name: Check django migrations
+      entry: ./src/manage.py makemigrations --check --dry-run
+      language: system
+      types: [python]
+      pass_filenames: false
