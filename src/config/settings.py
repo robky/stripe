@@ -4,13 +4,13 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-TRUE_VALUES = ["1", "True", "true", "YES", "yes"]
+TRUE_VALUES = ['1', 'True', 'true', 'YES', 'yes']
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
 
-SECRET_KEY = os.getenv("SECRET_KEY", default="yours-secret-key")
-DEBUG = os.getenv("DEBUG") in TRUE_VALUES
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", default="*").split(", ")
+SECRET_KEY = os.getenv('SECRET_KEY', default='yours-secret-key')
+DEBUG = os.getenv('DEBUG') in TRUE_VALUES
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', default='*').split(', ')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -49,11 +49,11 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = "config.asgi.application"
+ASGI_APPLICATION = 'config.asgi.application'
 WSGI_APPLICATION = 'config.wsgi.application'
 
-TEST_DB = os.getenv("TEST_DB", default="true") in TRUE_VALUES
-if TEST_DB or "test" in sys.argv:
+TEST_DB = os.getenv('TEST_DB', default='true') in TRUE_VALUES
+if TEST_DB or 'test' in sys.argv:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -62,13 +62,13 @@ if TEST_DB or "test" in sys.argv:
     }
 else:
     DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("DB_NAME", default="postgres"),
-            "USER": os.getenv("POSTGRES_USER", default="postgres"),
-            "PASSWORD": os.getenv("POSTGRES_PASSWORD", default="postgres"),
-            "HOST": os.getenv("DB_HOST", default="db"),
-            "PORT": os.getenv("DB_PORT", default="5432"),
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DB_NAME', default='postgres'),
+            'USER': os.getenv('POSTGRES_USER', default='postgres'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='postgres'),
+            'HOST': os.getenv('DB_HOST', default='db'),
+            'PORT': os.getenv('DB_PORT', default='5432'),
         }
     }
 

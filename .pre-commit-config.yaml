@@ -9,6 +9,7 @@ repos:
     - id: check-added-large-files # Проверяет, не добавляются ли большие файлы.
       args: ['--maxkb=300']  # максимальный размер добавляемого файла 300 кБ
     - id: check-merge-conflict # Проверяет, нет ли файлов, содержащих конфликтующие строки слияния.
+    - id: double-quote-string-fixer # Исправляет двойные ковычки на одинарные
 
 -   repo: https://github.com/psf/black
     rev: 23.12.1
