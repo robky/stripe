@@ -13,6 +13,7 @@
           <h3>{{ item.item.name }}</h3>
           <h5>Description: {{ item.item.description }}</h5>
           <h5>Price: ${{ item.item.get_real_price }}</h5>
+          <h5>Quantity: {{ item.quantity }}</h5>
         </div>
       {% endfor %}
     </div>
