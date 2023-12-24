@@ -11,6 +11,7 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY', default='yours-secret-key')
 DEBUG = os.getenv('DEBUG') in TRUE_VALUES
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', default='*').split(', ')
+DOMAIN_URL = os.getenv('DOMAIN_URL', default='http://localhost:8000/')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -19,6 +20,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api.apps.ApiConfig',
+    'orders.apps.OrdersConfig',
 ]
 
 MIDDLEWARE = [
@@ -33,10 +36,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -95,6 +99,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STRIPE_API_KEY = os.getenv('STRIPE_API_KEY')
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')

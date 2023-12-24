@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Buy now</title>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+<section>
+  {% if items %}
+    <div class="product">
+      {% for item in items %}
+        <div class="description">
+          <h3>{{ item.item.name }}</h3>
+          <h5>Description: {{ item.item.description }}</h5>
+          <h5>Price: ${{ item.item.get_real_price }}</h5>
+        </div>
+      {% endfor %}
+    </div>
+    <input id="checkout-button" type="button" value="Buy">
+  {% else %}
+    <p>The order is empty, there is nothing to buy.</p>
+  {% endif %}
+</section>
+</body>
+<script type="text/javascript">
+    var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+    var checkoutButton = document.getElementById("checkout-button");
+    checkoutButton.addEventListener("click", function () {
+        fetch("{% url 'orders:get_session' order_id %}", {method: 'GET',})
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (session) {
+                return stripe.redirectToCheckout({sessionId: session.sessionId});
+            })
+            .then(function (result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+    });
+</script>
+</html>

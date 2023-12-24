@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The orders</title>
+</head>
+<body>
+<section>
+  {% if orders %}
+    {% for order in orders %}
+      <p>
+        Order: <a href="{% url 'orders:view_order' order.pk %}">{{ order }}</a>
+      </p>
+    {% endfor %}
+  {% else %}
+    <p>
+      There are no orders, there is nothing to buy. Create an order in
+      <a href="{% url 'admin:index' %}">the admin panel</a>.
+    </p>
+  {% endif %}
+</section>
+</body>
+</html>
